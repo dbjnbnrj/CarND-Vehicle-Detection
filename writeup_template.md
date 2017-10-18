@@ -131,16 +131,43 @@ The following are some searched I did for image with -
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-
 My final pipeline code is in `process_rectangles` (which combines the bounding boxes for the different window sizes I searched on), `process_frame` which calculates the final pipeline with the following steps.
 
 
-1. Calculate the rectangles using process_rectangles for scale 1.25 and 1.5. I searched along the y-axis from (400, 656) using my pix per cell = 16 and cell per block = 2 , Colorspace = YUV, HOG Channel = "ALL"
+1. Calculate the rectangles using process_rectangles for scale 1.25, 1.5 and 2,9. I searched along the y-axis from (400, 656) using my pix per cell = 16 and cell per block = 2 , Colorspace = YUV, HOG Channel = "ALL"
 and Orientation = 12.
 2. Calculate the heatmap image using the rectangles
 3. Apply a threshold of 1 for the heatmap image
 4. Get Labels for the Heatmap
 5. Draw the labelled bounding boxes on the final image.
+
+This is my pipeline represented in images -
+
+**Original Image**
+![alt text](./output_images/07a_original_image.png "Original Image")
+
+**Sliding window - scale 1.25**
+![alt text](./output_images/07b_sliding_image_with_scale_1_25.png "07b_sliding_window_scale_1_25")
+
+**Sliding window - scale 1.5**
+![alt text](./output_images/07b_sliding_image_with_scale_1_5.png "07b_sliding_window_scale_1_25")
+
+**Sliding window - scale 2.0**
+![alt text](./output_images/07b_sliding_image_with_scale_2_0.png "07b_sliding_window_scale_1_25")
+
+**Sliding window - combined**
+![alt text](./output_images/07b_sliding_image_with_all.png "07b_sliding_window_scale_1_25")
+
+**Heatmap no threshold**
+![alt text](./output_images/07c_heatmap_image_no_threshold.png "07c_heatmap_image_no_threshold")
+
+
+**Heatmap with threshold**
+![alt text](./output_images/07d_heatmap_image_with_threshold.png "07c_heatmap_image_with_threshold")
+
+
+**Final Image**
+![alt text](./output_images/07e_final_image.png "07c_heatmap_image_with_threshold")
 
 
 For my project_video I tried using an augmented version of `process_frame_with_history` for processing the video frames where I also store the result for the last 10 frames and make use of that while calculating the results for a new frame so that the video frames appear smoother. However this strategy resulted in large number of false positives so I abandoned it and stuck to using `process_frame`
